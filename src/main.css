@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.shadow-round {
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.438);
+}
+
+.shadow-round2 {
+  box-shadow: 2px -5px 20px rgba(0, 0, 0, 0.144);
+}
+
+.shadow-hov,
+a .shadow-hov {
+  transform: scale(0.9);
+  transition: 0.3s;
+}
+
+.shadow-hov:hover,
+a:hover .shadow-hov {
+  box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.438);
+  transform: scale(1);
+}
