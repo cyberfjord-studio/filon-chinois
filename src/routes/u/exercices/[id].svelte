@@ -39,9 +39,32 @@
   export let questions
 
 
-
+  let reponses = []
   let active = 0
   let questionActive = 1
+  var points = 0
+
+  function corriger(reponses){
+    let i = 0
+    while (i < questions.length) {
+      if (questions[i].d.options.reponse == reponses[i]) {
+        points += 1
+      } 
+      i += 1
+    }
+    console.log(points)
+  }
+
+  function ajouterReponses(e){
+    reponses.push(e.detail.r)
+    if (questionActive != questions.length) {
+      questionActive += 1
+    }else{
+      corriger(reponses)
+      active = 3
+    }
+    
+  }
 </script>
 
 <div class="flex flex-row w-full items-center justify-between h-auto">
@@ -58,18 +81,18 @@
     </div>
   {:else if active == 1}
     {#each questions as question}
-      <div class="p-16 w-full flex flex-col justify-center items-center {questionActive == question.no ? 'block': 'hidden'}">
-          {question.no}/{questions.length}
-          {question.d.contenu}
-
+      <div class="mt-10 max-w-sm mx-auto flex-col justify-center items-stretch {questionActive == question.no ? 'flex': 'hidden'}">
+          <h5 class="text-2xl text-base-content">Question {question.no} sur {questions.length}</h5>
+          <p class="prose-xl pt-2">{question.d.contenu}</p>
+          <div class="py-4">
           {#if question.d.type == 0}
             Fichier non disponible
           {:else if question.d.type == 1}
-            <QuestionEcrite options={question.d.options}/>
+            <QuestionEcrite options={question.d.options} />
           {:else if question.d.type == 2}
             <ChoixReponse options={question.d.options}/>
           {:else if question.d.type == 3}
-            <VraiFaux options={question.d.options}/>
+            <VraiFaux options={question.d.options} on:reponse={ajouterReponses}/>
           {:else if question.d.type == 4}
             <DragDrop options={question.d.options}/>
           {:else if question.d.type == 5}
@@ -77,12 +100,15 @@
           {:else if question.d.type == 6}
             <TraductionChoix options={question.d.options}/>
           {/if}
-          {#if question.no == questions.length}
-            <button>Corriger</button>
-          {:else}
-            <button on:click={() => questionActive = questionActive + 1}>Suivant</button>
-          {/if}
+          </div>
       </div>
     {/each}
+  {:else if active == 3}
+    <div class="text-center mx-auto mt-10">
+      <h4 class="text-2xl">Bravo! Vous avez obtenu</h4>
+      <h3 class="text-9xl font-bold">{points}</h3>
+      <p class="text-4xl">pts!</p>
+    </div>
+
   {/if}
 </div>
