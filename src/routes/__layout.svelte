@@ -18,7 +18,7 @@
   import { page, session } from '$app/stores'
   import { browser } from '$app/env';
   import { goto } from '$app/navigation';
-  import { profilData, groupeData, bgImage } from '$lib/store';
+  import { profilData, groupeData, profilAvatar, bgImage } from '$lib/store';
 
   export let par
   bgImage.set(par.find(para => para.id == "bg-image").valeur.img)
@@ -29,13 +29,27 @@
     }
   }
 
+  async function downloadImage(path) {
+    try {
+      const { data, error } = await supabase.storage.from('avatars').download(path)
+      if (error) throw error
+      
+      profilAvatar.set(URL.createObjectURL(data))
+      
+    } catch (error) {
+      console.error('Error downloading image: ', error.message)
+    }
+  }
+
   async function getUserProfile(){
+    let path =  String($session.user.id) + ".jpg"
     let { data: profil, error } = await supabase
           .from('profil')
           .select("*")
           .eq("id", $session.user.id)
 
     profilData.set(profil[0])
+    await downloadImage(path)
 
     let { data: groupe, err } = await supabase
         .from('groupes')

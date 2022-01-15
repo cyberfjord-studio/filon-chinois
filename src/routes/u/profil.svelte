@@ -1,6 +1,8 @@
 <script>
-  import { profilData, groupeData, bgImage } from "$lib/store";
+  import { profilData, profilAvatar, groupeData, bgImage } from "$lib/store";
   import ProfilTable from "$lib/components/ProfilTable.svelte";
+  import EditerProfil from "$lib/components/EditerProfil.svelte"
+  
   let tab = 1
 </script>
 
@@ -14,7 +16,7 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="-mt-12 sm:-mt-16 flex items-end space-x-5">
         <div class="flex">
-          <img class="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32 bg-white" src={$profilData.avatar} alt="">
+          <img class="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32 bg-white" src={$profilAvatar} alt="">
         </div>
         <div class="mt-6 flex-1 sm:min-w-0 flex items-center sm:justify-end sm:space-x-6 sm:pb-1">
           <div class="sm:hidden 2xl:block mt-6 min-w-0 flex-1">
@@ -42,9 +44,9 @@
     <div class="w-full xl:w-1/2 mx-auto flex flex-col">
       <div>
         {#if tab == 1}
-          <ProfilTable gr={groupeData} u={profilData}/>
+          <ProfilTable />
         {:else}
-          Édition
+          <EditerProfil />
         {/if}
       </div>
     </div>

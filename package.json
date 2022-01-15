@@ -2,7 +2,7 @@
   "name": "filon-chinois",
   "version": "0.0.1",
   "scripts": {
-    "dev": "svelte-kit dev --port 8080 --host",
+    "dev": "svelte-kit dev --port 8000 --host",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview"

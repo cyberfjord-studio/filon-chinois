@@ -2,7 +2,7 @@
   import supabase from '$lib/db';
   import Chargement from '$lib/components/Chargement.svelte'
   import {groupeData} from '$lib/store'
-import { list } from 'postcss';
+  import { list } from 'postcss';
 
   async function getExercices(){
     let liste = []
