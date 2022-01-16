@@ -17,7 +17,6 @@
 
 <script>
   import Chargement from '$lib/components/Chargement.svelte';
-import { list } from 'postcss';
 
   export let lecon
 
@@ -26,6 +25,7 @@ import { list } from 'postcss';
     let { data: cats, error: erreur1 } = await supabase
       .from('categories')
       .select("*")
+      .order('ordre', { ascending: true })
 
     let { data: exercices, error: erreur2 } = await supabase
       .from('exercices')
@@ -46,12 +46,15 @@ import { list } from 'postcss';
   }
 </script>
 
-<div class="p-5 pb-32 md:p-10 md:pb-0">
+<div class="p-5 pb-32 md:p-10 md:pb-0 select-none">
   {#await getExercices()}
     <Chargement/>
   {:then liste}
     <div class="">
       {#each liste as li}
+      {#if li.exercices.length > 0}
+        
+      
       <h3 class="my-10 md:my-0 md:p-5 text-2xl text-neutral-content w-full text-center">{li.categorie.titre_cn} — {li.categorie.titre_fr}</h3>
       <div class="flex flex-row flex-wrap md:justify-center items-center gap-4 md:gap-0">
         {#each li.exercices as exercice}
@@ -63,6 +66,7 @@ import { list } from 'postcss';
         </a>
         {/each}
       </div>
+      {/if}
     {/each}
     </div>
     

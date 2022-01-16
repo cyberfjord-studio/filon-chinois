@@ -10,6 +10,7 @@
       .from('questions')
       .select('*')
       .eq('exercice', params.id)
+      
 
     let questions_format = []
     let qu = 1
@@ -28,87 +29,127 @@
 </script>
 
 <script>
-  import { bgImage } from '$lib/store';
+  import { bgImage, profilData } from '$lib/store';
+  import { DateTime } from "luxon";
   import QuestionEcrite from '$lib/components/questions/QuestionEcrite.svelte';
   import ChoixReponse from '$lib/components/questions/ChoixReponse.svelte';
   import DragDrop from '$lib/components/questions/DragDrop.svelte';
   import TraductionChoix from '$lib/components/questions/TraductionChoix.svelte';
   import TraductionEcrite from '$lib/components/questions/TraductionEcrite.svelte';
   import VraiFaux from '$lib/components/questions/VraiFaux.svelte';
+  import Chargement from '$lib/components/Chargement.svelte';
+
   export let exercice
   export let questions
 
-
-  let reponses = []
+  let totalPts = 0
+  let pts = 0
   let active = 0
   let questionActive = 1
-  var points = 0
 
-  function corriger(reponses){
-    let i = 0
-    while (i < questions.length) {
-      if (questions[i].d.options.reponse == reponses[i]) {
-        points += 1
-      } 
-      i += 1
-    }
-    console.log(points)
+  async function getAncienScore(){
+    let { data: ancienResultats, error } = await supabase
+      .from('resultats')
+      .select('*')
+      .order('date_exercice', { ascending: false })
+      .limit(5)
+
+    return ancienResultats
   }
 
-  function ajouterReponses(e){
-    reponses.push(e.detail.r)
+  function obtenirDate(da){
+    var d = DateTime.fromISO(da).setZone("America/New_York").setLocale("fr").toLocaleString(DateTime.DATETIME_MED)
+    return d
+  }
+
+  async function enregistrerScore(){
+    const { data, error } = await supabase
+      .from('resultats')
+      .insert([
+        { "utilisateur": $profilData.id, "exercice": exercice.id, "score": (pts/totalPts * 100)},
+      ])
+  }
+
+  function questionSuivante(e){
+    pts += e.detail.points
+    totalPts += e.detail.total
     if (questionActive != questions.length) {
       questionActive += 1
     }else{
-      corriger(reponses)
+      questionActive = 1
+      enregistrerScore()
       active = 3
     }
-    
   }
 </script>
 
 <div class="flex flex-row w-full items-center justify-between h-auto">
   {#if active == 0}
-    <div>
-      {exercice.titre_cn}{exercice.titre_fr}
-      {exercice.sous_titre_fr != null ? exercice.sous_titre_fr: ""}
-      {exercice.description != null ? exercice.description: ""}
-      Nombre de questions: {questions.length}
-      <button on:click={() => active = 1}>Débuter</button>
+    <div class="flex w-1/2 shrink-0 flex-col justify-center items-center gap-5">
+      <div class="flex flex-row justify-center items-center gap-10"><span class="flex justify-center items-center bg-secondary select-none text-secondary-content w-32 h-32 rounded-full text-2xl">{exercice.titre_cn}</span><span class="text-3xl select-none">{exercice.titre_fr}</span></div>
+      <span>{exercice.sous_titre_fr != null ? exercice.sous_titre_fr: ""}</span>
+      <p class="w-2/3 select-none text-justify ">{exercice.description != null ? exercice.description: ""}</p>
+      <div class="w-3/12 flex flex-row justify-between items-center">
+        <span class="uppercase font-bold select-none">
+          Nombre de questions
+        </span>
+        <span class="text-2xl select-none">
+          {questions.length}
+        </span>
+      </div>
+      <button class="btn btn-accent select-none" on:click={() => active = 1}>Débuter</button>
     </div>
-    <div class="w-1/2 h-full" >
-      <img src={$bgImage} class="mask mask-parallelogram" alt="">
+    <div class="w-1/2 shrink-0 h-screen flex justify-center items-center" style="background-image: url('{$bgImage}'); background-size: cover; background-position: bottom center f;">
+      {#await getAncienScore()}
+        <Chargement/>
+      {:then oldScore} 
+        <table class="backdrop-blur-xl bg-white bg-opacity-20 p-5 rounded-lg">
+          <tr >
+            <th class="pt-5" colspan="2">Dernières tentatives</th>
+          </tr>
+          
+          {#each oldScore as scorePct}
+          <tr>
+            <td class="p-3 pl-7 font-bold text-3xl ">{scorePct.score} %</td>
+            <td class="p-3 pr-7 text-lg">{obtenirDate(scorePct.date_exercice)}</td>
+          </tr>
+          {/each}
+          <tr><td class="pb-5"></td></tr>
+        </table>
+      {/await}
     </div>
   {:else if active == 1}
     {#each questions as question}
-      <div class="mt-10 max-w-sm mx-auto flex-col justify-center items-stretch {questionActive == question.no ? 'flex': 'hidden'}">
-          <h5 class="text-2xl text-base-content">Question {question.no} sur {questions.length}</h5>
-          <p class="prose-xl pt-2">{question.d.contenu}</p>
+      <div class="mt-10 select-none max-w-sm mx-auto flex-col justify-center items-stretch {questionActive == question.no ? 'flex': 'hidden'}">
+          <h5 class="text-2xl text-base-content select-none">Question {question.no} sur {questions.length}</h5>
+          <p class="prose-xl pt-2 select-none">{question.d.contenu}</p>
           <div class="py-4">
           {#if question.d.type == 0}
             Fichier non disponible
           {:else if question.d.type == 1}
-            <QuestionEcrite options={question.d.options} />
+            <QuestionEcrite options={question.d.options} on:suivant={questionSuivante} />
           {:else if question.d.type == 2}
-            <ChoixReponse options={question.d.options}/>
+            <ChoixReponse options={question.d.options} on:suivant={questionSuivante}/>
           {:else if question.d.type == 3}
-            <VraiFaux options={question.d.options} on:reponse={ajouterReponses}/>
+            <VraiFaux options={question.d.options} on:suivant={questionSuivante}/>
           {:else if question.d.type == 4}
-            <DragDrop options={question.d.options}/>
+            <DragDrop options={question.d.options} no={question.no} on:suivant={questionSuivante}/>
           {:else if question.d.type == 5}
-            <TraductionEcrite options={question.d.options}/>
+            <TraductionEcrite options={question.d.options} on:suivant={questionSuivante}/>
           {:else if question.d.type == 6}
-            <TraductionChoix options={question.d.options}/>
+            <TraductionChoix options={question.d.options} on:suivant={questionSuivante}/>
+          {:else}
+            <div class="mx-2 p-4 bg-primary hover:bg-primary-focus text-primary-content inline-block w-5/12 text-center rounded-xl cursor-pointer select-none" on:click={questionSuivante}>Suivant</div>
           {/if}
           </div>
       </div>
     {/each}
   {:else if active == 3}
-    <div class="text-center mx-auto mt-10">
-      <h4 class="text-2xl">Bravo! Vous avez obtenu</h4>
-      <h3 class="text-9xl font-bold">{points}</h3>
-      <p class="text-4xl">pts!</p>
+    <div class="text-center mx-auto mt-10 select-none">
+      <h4 class="text-2xl ">Bravo! Vous avez obtenu</h4>
+      <h3 class="text-9xl font-bold">{pts}</h3>
+      <p class="text-4xl">points sur {totalPts}!</p>
+      <a href="/u/" class="btn btn-primary mx-auto mt-16 select-none">Retour</a>
     </div>
-
   {/if}
 </div>

@@ -61,16 +61,17 @@
     {#if motSelectionne != ""}
       <div class=" bg-white mx-auto p-10 flex flex-col shadow-round2">
         <div on:click={() => fermer()} class="absolute top-6 right-6 cursor-pointer"><i  class="fas fa-close fa-2x hover:scale-125"></i></div>
-        <div class="flex flex-row">
-          <div class="flex flex-col gap-5 grow">
-            {#if motSelectionne.icone != null}
-              <img src={motSelectionne.icone} width="128" height="128" alt={motSelectionne.def_fr}/>
-            {/if}
+        <div class="flex flex-row justify-center items-center">
+          <div class="flex flex-col gap-5">
+            
             <h3 class="text-6xl text-center">{motSelectionne.hanzi}</h3>
             <h3 class="text-3xl text-center">{motSelectionne.pinyin}</h3>
+            {#if motSelectionne.icone != null}
+              <img src={`https://fjzpeeuodgpzyiranoip.supabase.in/storage/v1/object/public/ressources/${motSelectionne.icone}`} width="128" height="128" class="mx-auto" alt={motSelectionne.def_fr}/>
+            {/if}
           </div>
-          <div class="flex flex-row">
-
+          <div class="">
+            
           </div>
         </div>
         <div class="flex flex-col justify-center mt-5 items-center">

@@ -13,7 +13,7 @@
   
 </script>
 
-<div class="p-1 pb-32 md:p-10 md:pb-0">
+<div class="p-1 pb-32 md:p-10 md:pb-0 select-none">
   {#await getLecons()}
     <Chargement/>
   {:then lecons}
