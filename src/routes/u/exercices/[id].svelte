@@ -51,6 +51,7 @@
     let { data: ancienResultats, error } = await supabase
       .from('resultats')
       .select('*')
+      .eq('exercice', exercice.id)
       .order('date_exercice', { ascending: false })
       .limit(5)
 
@@ -103,6 +104,7 @@
       {#await getAncienScore()}
         <Chargement/>
       {:then oldScore} 
+        {#if oldScore.length }
         <table class="backdrop-blur-xl bg-white bg-opacity-20 p-5 rounded-lg">
           <tr >
             <th class="pt-5" colspan="2">Dernières tentatives</th>
@@ -116,6 +118,7 @@
           {/each}
           <tr><td class="pb-5"></td></tr>
         </table>
+        {/if}
       {/await}
     </div>
   {:else if active == 1}
