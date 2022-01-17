@@ -29,6 +29,10 @@
   
 </script>
 
+  <svelte:head>
+    <title>Exercices - Filon-Chinois</title>
+  </svelte:head>
+
 <div class="p-5 pb-32 md:p-10 md:pb-0 select-none">
   {#await getExercices()}
     <Chargement/>

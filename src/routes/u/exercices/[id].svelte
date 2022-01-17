@@ -84,6 +84,10 @@
   }
 </script>
 
+  <svelte:head>
+    <title>{exercice.titre_fr} - Filon-Chinois</title>
+  </svelte:head>
+
 <div class="flex flex-row w-full items-center justify-between h-auto">
   {#if active == 0}
     <div class="flex w-1/2 shrink-0 flex-col justify-center items-center gap-5">

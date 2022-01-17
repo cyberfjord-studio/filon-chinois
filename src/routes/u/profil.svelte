@@ -6,6 +6,10 @@
   let tab = 1
 </script>
 
+  <svelte:head>
+    <title>{$profilData.pseudo} - Filon-Chinois</title>
+  </svelte:head>
+
 <article class="pb-24 md:pb-0">
   <div>
     <div>

@@ -76,6 +76,11 @@
   }
 </script>
 
+<svelte:head>
+	<title>Filon-Chinois - Apprendre le chinois!</title>
+  
+</svelte:head>
+
 <div class="min-h-screen h-screen max-h-screen w-screen flex flex-row" >
   <nav class="fixed hidden md:block md:left-0 md:top-0 md:bottom-0 w-24 max-w-24 h-screen bg-base-200 z-40 shadow-round">
   </nav>

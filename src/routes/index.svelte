@@ -4,6 +4,8 @@
   import { bgImage } from '$lib/store';
 </script>
 
+
+
 <div class="w-full h-96 md:h-full" style="background-image: linear-gradient(175deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 37%), url('{$bgImage}'); background-size: cover; background-position: bottom center;">
   <header class="flex flex-col md:gap-5 pl-10 pt-4">
     <h1 class="uppercase font-light text-3xl md:text-6xl">Filon Chinois</h1>
