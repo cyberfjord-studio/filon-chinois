@@ -8,6 +8,17 @@
   let modal = false
   let message = 0
 
+  async function nouvelAvatar(utilisateur){
+    const avatarFile = 'https://www.filon-chinois.app/avatarsample.jpg'
+    const { data, error } = await supabase
+      .storage
+      .from('avatars')
+      .upload(`${utilisateur}.jpg`, avatarFile, {
+        cacheControl: '3600',
+        upsert: false
+      })
+  }
+
   async function verif(){
     message = 0
     let { data: groupes, error } = await supabase
@@ -32,6 +43,8 @@
       .insert([
         { id: user.id, pseudo: user.email, groupe: groupe }
       ])
+
+    nouvelAvatar(user.id)
     if (error || e2) {
       message = 2
     } else {
