@@ -34,9 +34,11 @@
   import QuestionEcrite from '$lib/components/questions/QuestionEcrite.svelte';
   import ChoixReponse from '$lib/components/questions/ChoixReponse.svelte';
   import DragDrop from '$lib/components/questions/DragDrop.svelte';
-  import TraductionChoix from '$lib/components/questions/TraductionChoix.svelte';
+  import DragDropDouble from '$lib/components/questions/DragDropDouble.svelte';
+  import ListeEcrite from '$lib/components/questions/ListeEcrite.svelte';
+  import Bullet from '$lib/components/questions/Bullet.svelte';
+  //import TraductionChoix from '$lib/components/questions/TraductionChoix.svelte';
   import TraductionEcrite from '$lib/components/questions/TraductionEcrite.svelte';
-  import VraiFaux from '$lib/components/questions/VraiFaux.svelte';
   import Chargement from '$lib/components/Chargement.svelte';
 
   export let exercice
@@ -129,7 +131,7 @@
     {#each questions as question}
       <div class="mt-10 select-none max-w-sm mx-auto flex-col justify-center items-stretch {questionActive == question.no ? 'flex': 'hidden'}">
           <h5 class="text-2xl text-base-content select-none">Question {question.no} sur {questions.length}</h5>
-          <p class="prose-xl pt-2 select-none">{question.d.contenu}</p>
+          <p class="prose-xl pt-2 select-none">{@html question.d.contenu}</p>
           <div class="py-4">
           {#if question.d.type == 0}
             Fichier non disponible
@@ -138,13 +140,17 @@
           {:else if question.d.type == 2}
             <ChoixReponse options={question.d.options} on:suivant={questionSuivante}/>
           {:else if question.d.type == 3}
-            <VraiFaux options={question.d.options} on:suivant={questionSuivante}/>
-          {:else if question.d.type == 4}
             <DragDrop options={question.d.options} no={question.no} on:suivant={questionSuivante}/>
+          {:else if question.d.type == 4}
+            <DragDropDouble options={question.d.options} no={question.no} on:suivant={questionSuivante}/>
           {:else if question.d.type == 5}
             <TraductionEcrite options={question.d.options} on:suivant={questionSuivante}/>
-          {:else if question.d.type == 6}
-            <TraductionChoix options={question.d.options} on:suivant={questionSuivante}/>
+          <!--{:else if question.d.type == 6}
+            <TraductionChoix options={question.d.options} on:suivant={questionSuivante}/>-->
+          {:else if question.d.type == 7}
+            <ListeEcrite options={question.d.options} on:suivant={questionSuivante}/>
+          {:else if question.d.type == 8}
+            <Bullet options={question.d.options} on:suivant={questionSuivante}/>
           {:else}
             <div class="mx-2 p-4 bg-primary hover:bg-primary-focus text-primary-content inline-block w-5/12 text-center rounded-xl cursor-pointer select-none" on:click={questionSuivante}>Suivant</div>
           {/if}

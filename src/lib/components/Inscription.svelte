@@ -30,16 +30,14 @@
     const { data, error: e2 } = await supabase
       .from('profil')
       .insert([
-        { id: user.id, pseudo: user.email, avatar: `https://avatars.dicebear.com/api/bottts/${user.email}.svg`, groupe: groupe }
+        { id: user.id, pseudo: user.email, groupe: groupe }
       ])
     if (error || e2) {
       message = 2
     } else {
       message = 1
-      //modal = false
     }
 
-    
   }
 </script>
 

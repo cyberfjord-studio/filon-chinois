@@ -5,15 +5,15 @@
   export let options
   let rep = ""
   /*
-  {
-  "reponses": [
-    "你好",
-    "谢谢",
-    "再见",
-    "你们好",
-    "拜拜"
-  ]
-}
+    {
+      "reponses": [
+        "你好",
+        "谢谢",
+        "再见",
+        "你们好",
+        "拜拜"
+      ]
+    }
   */
   function corriger(){
     let pts = 0

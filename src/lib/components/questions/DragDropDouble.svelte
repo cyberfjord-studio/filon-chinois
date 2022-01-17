@@ -9,6 +9,7 @@
   let lexico = []
   let dropAlea
   let dragAlea
+  let dragAlea2
   let pts = 0
   let total = 0
   /*
@@ -38,6 +39,7 @@
   function shuffle(array){
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
+        console.log(j)
         const temp = array[i];
         array[i] = array[j];
         array[j] = temp;
@@ -72,16 +74,20 @@
 
   function getDrag(){
     let drag = []
+    let drag2 = []
+    let tempDrag2 = []
     let tempDrag = []
     lexico.map((mot) => {
       tempDrag = []
       options.drag.map((dragItem) => {
         tempDrag.push(mot[dragItem])
+        tempDrag2.push(mot[dragItem])
       })
-
       drag.push({tempDrag})
+      drag2.push({tempDrag})
     })
     dragAlea = shuffle(drag)
+    dragAlea2 = shuffle(drag2)
     console.log(dragAlea)
   }
 
@@ -153,7 +159,11 @@
               
             </div>
           </div>
-          
+          <div class="p-2">
+            <div class="droppable d1 w-full h-10 bg-red-100 rounded-lg " data-question={drop.tempDrop[0]} on:dragover={dOver}>
+              
+            </div>
+          </div>
         </div>
       {/each}
     {/if}
@@ -165,7 +175,13 @@
         <div class="p-1 draggable d2 cursor-move" draggable="true" on:dragstart={dDrag} on:dragend={fDrag} data-reponse={drag.tempDrag[0]}>
           <div class="w-full h-10 text-xs bg-gray-200 rounded-lg flex flex-col justify-center items-center">
             <p>{drag.tempDrag[0]}</p> 
-            <p>{drag.tempDrag[1] ?  drag.tempDrag[1]: ""}</p>
+          </div>
+        </div>
+      {/each}
+      {#each dragAlea2 as draga}
+        <div class="p-1 draggable d2 cursor-move" draggable="true" on:dragstart={dDrag} on:dragend={fDrag} data-reponse={draga.tempDrag[1]}>
+          <div class="w-full h-10 text-xs bg-gray-200 rounded-lg flex flex-col justify-center items-center">
+            <p>{draga.tempDrag[1]}</p> 
           </div>
         </div>
       {/each}

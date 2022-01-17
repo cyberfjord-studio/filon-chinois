@@ -14,23 +14,22 @@
 </script>
 
   <svelte:head>
-    <title>Lecons - Filon-Chinois</title>
+    <title>Leçons - Filon-Chinois</title>
   </svelte:head>
 
 <div class="p-1 pb-32 md:p-10 md:pb-0 select-none">
   {#await getLecons()}
     <Chargement/>
   {:then lecons}
-    <h3 class="p-5 text-2xl text-neutral-content">Niveau {$groupeData.niveau}</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div class="flex flex-col justify-center items-center">
       {#each lecons as lecon}
       <a href="/u/lecons/{lecon.niveau}/{lecon.num_fr}">
         <div class="group flex flex-row justify-between rounded-xl items-center cursor-pointer hover:bg-secondary hover:text-secondary-content">
           <div class="flex flex-col bg-base-100 p-5 rounded-lg drop-shadow-lg text-center">
             <p class="font-medium md:text-3xl text-base-content group-hover:text-primary-focus">第{lecon.num_cn}课</p>
-            <p class="uppercase md:text-xl group-hover:text-primary-focus">Lecon {lecon.num_fr}</p>
+            <p class="uppercase md:text-xl group-hover:text-primary-focus">Leçon {lecon.num_fr}</p>
           </div>
-          <div class="flex flex-col p-5 grow items-center">
+          <div class="flex flex-col p-5 px-10 grow items-center">
             <h4 class="uppercase md:text-xl">{lecon.titre_fr}</h4>
             <h4 class="md:text-xl">{lecon.titre_cn}</h4>
           </div>

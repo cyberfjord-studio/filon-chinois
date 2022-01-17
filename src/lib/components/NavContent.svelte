@@ -2,7 +2,7 @@
   const menu = [
     {
       "texte_cn": "课程",
-      "texte_fr": "Lecons",
+      "texte_fr": "Leçons",
       "url": "/u/lecons"
     },
     {

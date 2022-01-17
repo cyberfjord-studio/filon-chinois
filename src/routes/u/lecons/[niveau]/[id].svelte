@@ -17,6 +17,7 @@
 
 <script>
   import Chargement from '$lib/components/Chargement.svelte';
+  import CarteLecon from '$lib/components/CarteLecon.svelte';
 
   export let lecon
 
@@ -31,8 +32,6 @@
       .from('exercices')
       .select("*")
       .eq('lecons', lecon.id)
-
-    console.log(exercices)
 
     cats.map((cat) => {
       let tab = []
@@ -56,22 +55,12 @@
   {#await getExercices()}
     <Chargement/>
   {:then liste}
-    <div class="">
+    <div class="grid grid-cols-5">
       {#each liste as li}
       {#if li.exercices.length > 0}
-        
-      
-      <h3 class="my-10 md:my-0 md:p-5 text-2xl text-neutral-content w-full text-center">{li.categorie.titre_cn} — {li.categorie.titre_fr}</h3>
-      <div class="flex flex-row flex-wrap md:justify-center items-center gap-4 md:gap-0">
         {#each li.exercices as exercice}
-        <a class="w-full md:w-auto" href="/u/exercices/{exercice.id}">
-          <div class="group flex md:flex-col flex-row md:justify-between rounded-xl items-center cursor-pointer md:p-10">
-            <p class="font-medium flex justify-center items-center rounded-full w-24 h-24 md:w-36 md:h-36 bg-primary text-xl md:text-3xl text-primary-content mb-3 shadow-hov">{exercice.titre_cn}</p>
-            <h4 class="ml-5 md:ml-0 text-xl text-primary">{exercice.titre_fr}</h4>
-          </div>
-        </a>
+          <CarteLecon d={exercice} c={li.categorie}/>
         {/each}
-      </div>
       {/if}
     {/each}
     </div>
