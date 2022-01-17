@@ -7,7 +7,7 @@
     let { data: lecons, error } = await supabase
         .from('lecons')
         .select("*")
-        .eq("niveau", $groupeData.niveau)
+        .eq("niveau", 99)
     return lecons
   }
   

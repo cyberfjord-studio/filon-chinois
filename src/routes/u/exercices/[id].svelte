@@ -93,7 +93,7 @@
     <div class="flex w-1/2 shrink-0 flex-col justify-center items-center gap-5">
       <div class="flex flex-row justify-center items-center gap-10"><span class="flex justify-center items-center bg-secondary select-none text-secondary-content w-32 h-32 rounded-full text-2xl">{exercice.titre_cn}</span><span class="text-3xl select-none">{exercice.titre_fr}</span></div>
       <span>{exercice.sous_titre_fr != null ? exercice.sous_titre_fr: ""}</span>
-      <p class="w-2/3 select-none text-justify ">{exercice.description != null ? exercice.description: ""}</p>
+      <p class="w-2/3 select-none text-justify ">{@html exercice.description}</p>
       <div class="w-3/12 flex flex-row justify-between items-center">
         <span class="uppercase font-bold select-none">
           Nombre de questions

@@ -25,17 +25,19 @@
     let { data: cats, error: erreur1 } = await supabase
       .from('categories')
       .select("*")
-      .order('ordre', { ascending: true })
+      .order('id', { ascending: true })
 
     let { data: exercices, error: erreur2 } = await supabase
       .from('exercices')
       .select("*")
       .eq('lecons', lecon.id)
 
+    console.log(exercices)
+
     cats.map((cat) => {
       let tab = []
       exercices.map((exercice) => {
-        if (exercice.cat == cat.id) {
+        if (exercice.categorie == cat.id) {
           tab.push(exercice)
         }
       })
