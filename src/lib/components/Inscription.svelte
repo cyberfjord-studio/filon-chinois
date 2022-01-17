@@ -26,7 +26,7 @@
       .select("*")
       .eq('id', groupe)
 
-    if (groupes.length == 1) {
+    if (groupes.length) {
       inscription()
     } else {
       message = 3
@@ -44,7 +44,7 @@
         { id: user.id, pseudo: user.email, groupe: groupe }
       ])
 
-    nouvelAvatar(user.id)
+    await nouvelAvatar(user.id)
     if (error || e2) {
       message = 2
     } else {
