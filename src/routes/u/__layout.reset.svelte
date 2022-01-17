@@ -22,8 +22,13 @@
   import Header from '$lib/components/Header.svelte';
   import { profilData, groupeData, profilAvatar, bgImage} from '$lib/store';
   import Chargement from '$lib/components/Chargement.svelte';
+  import SpeechSynthesis from '$lib/components/SpeechSynthesis.svelte';
 
-  var pret = false
+  const REGEX_CHINESE = /[\u4e00-\u9fff]|[\u3400-\u4dbf]|[\u{20000}-\u{2a6df}]|[\u{2a700}-\u{2b73f}]|[\u{2b740}-\u{2b81f}]|[\u{2b820}-\u{2ceaf}]|[\uf900-\ufaff]|[\u3300-\u33ff]|[\ufe30-\ufe4f]|[\uf900-\ufaff]|[\u{2f800}-\u{2fa1f}]/u;
+
+  let pret = false
+  let pop
+  let selectedText = ""
 
   export let par
   bgImage.set(par.find(para => para.id == "bg-image").valeur.img)
@@ -43,6 +48,26 @@
       
     } catch (error) {
       console.error('Error downloading image: ', error.message)
+    }
+  }
+
+  function fabtrad(e){
+    let phrase
+    if (window.getSelection().toString().length > 0) {
+      let result = window.getSelection().toString().split("").filter((mot) => {
+        return REGEX_CHINESE.test(mot)
+      })
+      phrase = result.join("")
+      
+    }else{
+      phrase = null
+    }
+    if (phrase != null) {
+        pop.style.top = e.clientY + "px"
+        pop.style.left = e.clientX + "px"
+        pop.classList.remove("hidden")
+        selectedText = phrase
+        window.getSelection().removeAllRanges()
     }
   }
 
@@ -81,9 +106,31 @@
       navDash()
     })
   }
+
+  function menageSelection(e){
+    let rect = pop.getBoundingClientRect()
+    if (e.clientX > rect.left && e.clientY > rect.top && e.clientX < rect.left + rect.width && e.clientY < rect.top + rect.height) {
+      
+    } else {
+      window.getSelection().removeAllRanges();
+      pop.classList.add('hidden')
+    }
+    
+  }
+
+  function tts(texte){
+    
+  }
 </script>
 
-<div class="h-screen max-h-screen w-full flex flex-row select-none">
+<svelte:window on:mouseup={fabtrad} on:mousedown={menageSelection}/>
+<div bind:this={pop} class="hidden fixed top-0 left-0 z-50 bg-white shadow-xl  p-6 text-3xl rounded-lg">
+  <div class="flex flex-row gap-5 justify-between items-center">
+    <span>{selectedText}</span>
+    <SpeechSynthesis texte={selectedText}/>
+  </div>
+</div>
+<div class="h-screen max-h-screen w-full flex flex-row ">
   <nav class="fixed hidden md:block md:left-0 md:top-0 md:bottom-0 w-24 max-w-24 h-screen bg-base-200 z-40 shadow-round">
     <NavContent/>
   </nav>
@@ -97,6 +144,7 @@
     {#if pret}
       <slot/>
     {:else}
+    
     <div class="w-full h-full flex justify-center items-center">
       <Chargement/>
     </div>

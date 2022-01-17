@@ -18,8 +18,10 @@
   },
   "type": "module",
   "dependencies": {
+    "@google-cloud/text-to-speech": "^3.4.0",
     "@supabase/supabase-js": "^1.29.1",
     "daisyui": "^1.22.0",
+    "google-tts-api": "^2.0.2",
     "gsap": "^3.9.1",
     "luxon": "^2.3.0"
   }
