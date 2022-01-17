@@ -35,15 +35,16 @@
     }
     
     )
-    }
-    
-
     nouvelAvatar(user.id)
     if (error) {
       message = 2
     } else {
       message = 1
     }
+    }
+    
+
+    
 
   }
 </script>
