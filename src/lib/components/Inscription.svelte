@@ -61,8 +61,8 @@
     <form class="gap-2 bg-base-100 w-full md:w-4/12 xl:w-2/12 p-7 rounded-md" on:submit|preventDefault={verif}>
       <div class="flex flex-col gap-2 justify-center items-stretch">
         <input bind:value={email} type="email" name="email" id="email" placeholder="Adresse courriel" class="input input-md input-bordered">
-        <input  bind:value={pass} class="input input-md input-bordered" placeholder="Mot de passe" type="password" name="password" id="password" >
-        <input  bind:value={groupe} class="input input-md input-bordered" placeholder="Groupe" type="text" name="groupe" id="groupe" >
+        <input bind:value={pass} class="input input-md input-bordered" placeholder="Mot de passe" type="password" name="password" id="password" >
+        <input bind:value={groupe} class="input input-md input-bordered" placeholder="Groupe" type="text" name="groupe" id="groupe" >
       </div>
       <div class="my-4">
         {#if message == 1}
