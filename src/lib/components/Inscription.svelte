@@ -1,9 +1,10 @@
 <script>
   import supabase from '$lib/db'
 
-  let email = ""
-  let pass = ""
-  let groupe = ""
+  let emailins = ""
+  let passins = ""
+  let niveauins = 1
+  let institutionins = ""
 
   let modal = false
   let message = 0
@@ -19,33 +20,26 @@
       })
   }
 
-  async function verif(){
-    message = 0
-    let { data: groupes, error } = await supabase
-      .from('groupes')
-      .select("*")
-      .eq('id', groupe)
-
-    if (groupes.length) {
-      inscription()
-    } else {
-      message = 3
-    }
-  }
   async function inscription(){
-    const { user, session, error } = await supabase.auth.signUp({
-      email: email,
-      password: pass,
-    })
-    await user
-    const { data, error: e2 } = await supabase
-      .from('profil')
-      .insert([
-        { id: user.id, pseudo: user.email, groupe: groupe }
-      ])
+    if (emailins != "" && passins != "" && niveauins != "" && institutionins != "") {
+      const { user, session, error } = await supabase.auth.signUp({
+      email: emailins,
+      password: passins,
+    },
+    {
+      data: {
+        pseudo: emailins.split('@')[0],
+        niveau: niveauins,
+        institution: institutionins
+      }
+    }
+    
+    )
+    }
+    
 
-    await nouvelAvatar(user.id)
-    if (error || e2) {
+    nouvelAvatar(user.id)
+    if (error) {
       message = 2
     } else {
       message = 1
@@ -58,11 +52,20 @@
 
 {#if modal}
   <div class="fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-60 flex justify-center items-center">
-    <form class="gap-2 bg-base-100 w-full md:w-4/12 xl:w-2/12 p-7 rounded-md" on:submit|preventDefault={verif}>
+    <form class="gap-2 bg-base-100 w-full md:w-4/12 xl:w-2/12 p-7 rounded-md" on:submit|preventDefault={inscription}>
       <div class="flex flex-col gap-2 justify-center items-stretch">
-        <input bind:value={email} type="email" name="email" id="email" placeholder="Adresse courriel" class="input input-md input-bordered">
-        <input bind:value={pass} class="input input-md input-bordered" placeholder="Mot de passe" type="password" name="password" id="password" >
-        <input bind:value={groupe} class="input input-md input-bordered" placeholder="Groupe" type="text" name="groupe" id="groupe" >
+        <input bind:value={emailins} type="email" name="email" id="email" placeholder="Adresse courriel" class="input input-md input-bordered">
+        <input bind:value={passins} class="input input-md input-bordered" placeholder="Mot de passe" type="password" name="password" id="password" >
+        <select bind:value={institutionins} name="institution" id="institution">
+          <option value="Université de Sherbrooke">Université de Sherbrooke</option>
+          <option value="Université de Montréal">Université de Montréal</option>
+          <option value="Université Bishop">Université Bishop</option>
+          <option value="Collège Champlain">Collège Champlain</option>
+        </select>
+        <select bind:value={niveauins} name="niveau" id="niveau">
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
       </div>
       <div class="my-4">
         {#if message == 1}
