@@ -3,8 +3,8 @@
 
   let email = ""
   let pass = ""
-  let niveau = 1
-  let institution = ""
+  let niveau = "1"
+  let institution = "Université de Sherbrooke"
 
   let modal = false
   let message = null
@@ -13,20 +13,11 @@
     const { data, error } = await supabase
       .from('utilisateurs')
       .insert([
-        { id: u.uid(), nom: e.split('@')[0], niveau: n, instituion: i },
+        { id: u.id, nom: e.split('@')[0], niveau: n, institution: i },
       ])
+      console.log(error)
   }
 
-  async function nouvelAvatar(utilisateur){
-    const avatarFile = 'https://www.filon-chinois.app/avatarsample.jpg'
-    const { data, error } = await supabase
-      .storage
-      .from('avatars')
-      .upload(`${utilisateur}.jpg`, avatarFile, {
-        cacheControl: '3600',
-        upsert: false
-      })
-  }
 
   async function inscription(){
     if (pass.length < 6) {
@@ -38,7 +29,7 @@
           password: pass,
         }
     )
-
+      console.log(user)
       if (error) {
         message = ["error", "Échec! Veuillez réessayer."]
       } else {
@@ -59,16 +50,20 @@
   <div class="fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-60 flex justify-center items-center">
     <form class="gap-2 bg-base-100 w-full md:w-4/12 xl:w-2/12 p-7 rounded-md" on:submit|preventDefault={inscription}>
       <div class="flex flex-col gap-2 justify-center items-stretch">
+        <label class="text-xs" for="email">Email</label>
         <input bind:value={email} type="email" name="email" id="email" placeholder="Adresse courriel" class="input input-md input-bordered">
+        <label class="text-xs" for="password">Mot de passe</label>
         <input bind:value={pass} class="input input-md input-bordered" placeholder="Mot de passe" type="password" name="password" id="password" >
-        <select bind:value={institution} name="institution" id="institution">
+        <label class="text-xs" for="institution">Institution</label>
+        <select bind:value={institution} name="institution" id="institution" class="select select-bordered w-full max-w-xs">
           <option selected="selected" value="Université de Sherbrooke">Université de Sherbrooke</option>
           <option value="Université de Montréal">Université de Montréal</option>
           <option value="Université Bishop">Université Bishop</option>
           <option value="Collège Champlain">Collège Champlain</option>
           <option value="Collège Champlain">Autres</option>
         </select>
-        <select bind:value={niveau} name="niveau" id="niveau">
+        <label class="text-xs" for="niveau">Niveau</label>
+        <select bind:value={niveau} name="niveau" id="niveau" class="select select-bordered w-full max-w-xs">
           <option selected="selected" value="1">1</option>
         </select>
       </div>
