@@ -115,7 +115,7 @@
       <div class="flex flex-row justify-center items-center gap-10"><span class="text-3xl ">{exercice.titre_fr}</span></div>
       <span>{exercice.sous_titre_fr != null ? exercice.sous_titre_fr: ""}</span>
       <p class="w-2/3  text-justify mx-auto">{@html exercice.description}</p>
-      <div class="w-3/12 flex flex-row justify-between items-center">
+      <div class="w-4/12 flex flex-row justify-between items-center">
         <span class="uppercase font-bold ">
           Nombre de sections
         </span>
