@@ -17,6 +17,7 @@
       email: email,
       password: pass,
     })
+    console.log(error)
     modal = false
   }
 </script>
