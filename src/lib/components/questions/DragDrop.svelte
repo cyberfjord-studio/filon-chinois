@@ -52,7 +52,6 @@
       .in('id', options.mots)
 
     lexico = lexique
-    console.log(lexico)
   }
 
   function getDrop(){

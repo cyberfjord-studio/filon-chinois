@@ -37,6 +37,8 @@
   import DragDropDouble from '$lib/components/questions/DragDropDouble.svelte';
   import ListeEcrite from '$lib/components/questions/ListeEcrite.svelte';
   import Bullet from '$lib/components/questions/Bullet.svelte';
+  import Theorie from '$lib/components/questions/Theorie.svelte';
+  import TheorieLexique from '$lib/components/questions/TheorieLexique.svelte';
   //import TraductionChoix from '$lib/components/questions/TraductionChoix.svelte';
   import TraductionEcrite from '$lib/components/questions/TraductionEcrite.svelte';
   import Chargement from '$lib/components/Chargement.svelte';
@@ -77,11 +79,15 @@
   function questionSuivante(e){
     pts += e.detail.points
     totalPts += e.detail.total
+    window.scrollTo(0, 0);
     if (questionActive != questions.length) {
       questionActive += 1
     }else{
       questionActive = 1
-      enregistrerScore()
+      if (!isNaN(totalPts)) {
+        enregistrerScore()
+      }
+      
       active = 3
     }
   }
@@ -99,7 +105,7 @@
       <p class="w-2/3  text-justify mx-auto">{@html exercice.description}</p>
       <div class="w-3/12 flex flex-row justify-between items-center">
         <span class="uppercase font-bold ">
-          Nombre de questions
+          Nombre de sections
         </span>
         <span class="text-2xl ">
           {questions.length}
@@ -130,45 +136,77 @@
     </div>
   {:else if active == 1}
     {#each questions as question}
-      <div class="mt-10 select-none max-w-sm mx-auto flex-col justify-center items-center {questionActive == question.no ? 'flex': 'hidden'}">
-          <h5 class="text-lg italic text-base-content select-none">Question {question.no} sur {questions.length}</h5>
-          <p class="prose-xl pt-2 select-none">{@html question.d.contenu}</p>
-          {#if question.d.fichier != null}
-            <div class="mt-5">
-              <Fichier d={question.d.fichier}/>
-            </div>  
-          {/if}
-          <div class="py-4 w-full">
-          {#if question.d.type == 0}
-            Fichier non disponible
-          {:else if question.d.type == 1}
-            <QuestionEcrite options={question.d.options} on:suivant={questionSuivante} />
-          {:else if question.d.type == 2}
-            <ChoixReponse options={question.d.options} on:suivant={questionSuivante}/>
-          {:else if question.d.type == 3}
-            <DragDrop options={question.d.options} no={question.no} on:suivant={questionSuivante}/>
-          {:else if question.d.type == 4}
-            <DragDropDouble options={question.d.options} no={question.no} on:suivant={questionSuivante}/>
-          {:else if question.d.type == 5}
-            <TraductionEcrite options={question.d.options} on:suivant={questionSuivante}/>
-          <!--{:else if question.d.type == 6}
-            <TraductionChoix options={question.d.options} on:suivant={questionSuivante}/>-->
-          {:else if question.d.type == 7}
-            <ListeEcrite options={question.d.options} on:suivant={questionSuivante}/>
-          {:else if question.d.type == 8}
-            <Bullet options={question.d.options} no={question.no} on:suivant={questionSuivante}/>
-          {:else}
-            <div class="mx-2 p-4 bg-primary hover:bg-primary-focus text-primary-content inline-block w-5/12 text-center rounded-xl cursor-pointer select-none" on:click={questionSuivante}>Suivant</div>
-          {/if}
-          </div>
-      </div>
+      {#if question.d.type > 97}
+      <div class="mt-10 w-1/2 mx-auto flex-col  {questionActive == question.no ? 'flex': 'hidden'}">
+        {#if question.d.contenu}
+          <p class="prose-xl pt-2  ">{@html question.d.contenu}</p>
+        {/if}
+        {#if question.d.fichier != null}
+          <div class="mt-5 max-w-lg text-center flex justify-center items-center">
+            <Fichier d={question.d.fichier}/>
+          </div>  
+        {/if}
+        <div class="py-4 w-full">
+        {#if question.d.type == 98}
+          <Theorie options={question.d} on:suivant={questionSuivante}/>
+        {:else if question.d.type == 99}
+          <TheorieLexique options={question.d} on:suivant={questionSuivante}/>
+        {:else}
+          <div class="mx-2 p-4 bg-primary hover:bg-primary-focus text-primary-content inline-block w-5/12 text-center rounded-xl cursor-pointer" on:click={questionSuivante}>Suivant</div>
+        {/if}
+        </div>
+    </div>
+      {:else}
+      <div class="mt-10 max-w-sm mx-auto flex-col  {questionActive == question.no ? 'flex': 'hidden'}">
+        <h5 class="text-lg italic text-base-content ">Question {question.no} sur {questions.length}</h5>
+        <p class="prose-xl pt-2  ">{@html question.d.contenu }</p>
+        {#if question.d.fichier != null}
+          <div class="mt-5">
+            <Fichier d={question.d.fichier}/>
+          </div>  
+        {/if}
+        <div class="py-4 w-full">
+        {#if question.d.type == 0}
+          Fichier non disponible
+        {:else if question.d.type == 1}
+          <QuestionEcrite options={question.d.options} on:suivant={questionSuivante} />
+        {:else if question.d.type == 2}
+          <ChoixReponse options={question.d.options} on:suivant={questionSuivante}/>
+        {:else if question.d.type == 3}
+          <DragDrop options={question.d.options} no={question.no} on:suivant={questionSuivante}/>
+        {:else if question.d.type == 4}
+          <DragDropDouble options={question.d.options} no={question.no} on:suivant={questionSuivante}/>
+        {:else if question.d.type == 5}
+          <TraductionEcrite options={question.d.options} on:suivant={questionSuivante}/>
+        <!--{:else if question.d.type == 6}
+          <TraductionChoix options={question.d.options} on:suivant={questionSuivante}/>-->
+        {:else if question.d.type == 7}
+          <ListeEcrite options={question.d.options} on:suivant={questionSuivante}/>
+        {:else if question.d.type == 8}
+          <Bullet options={question.d.options} no={question.no} on:suivant={questionSuivante}/>
+        {:else}
+          <div class="mx-2 p-4 bg-primary hover:bg-primary-focus text-primary-content inline-block w-5/12 text-center rounded-xl cursor-pointer" on:click={questionSuivante}>Suivant</div>
+        {/if}
+        </div>
+    </div>
+      {/if}
+      
+      
     {/each}
   {:else if active == 3}
-    <div class="text-center mx-auto mt-10 select-none">
-      <h4 class="text-2xl ">Bravo! Vous avez obtenu</h4>
-      <h3 class="text-9xl font-bold">{pts}</h3>
-      <p class="text-4xl">points sur {totalPts}!</p>
-      <a href="/u/" class="btn btn-primary mx-auto mt-16 select-none">Retour</a>
-    </div>
+      {#if isNaN(totalPts) || totalPts == 0}
+        <div class="text-center mx-auto mt-10 select-none">
+          <h4 class="text-2xl ">Section terminée</h4>
+          <a href="/u/lecons/{exercice.lecons}" class="btn btn-primary mx-auto mt-5 select-none">Retour</a>
+        </div>
+      {:else}
+        <div class="text-center mx-auto mt-10 select-none">
+          <h4 class="text-2xl ">Bravo! Vous avez obtenu</h4>
+          <h3 class="text-9xl font-bold">{pts}</h3>
+          <p class="text-4xl">points sur {totalPts}!</p>
+          <a href="/u/lecons/{exercice.lecons}" class="btn btn-primary mx-auto mt-16 select-none">Retour</a>
+        </div>
+      {/if}
+    
   {/if}
 </div>

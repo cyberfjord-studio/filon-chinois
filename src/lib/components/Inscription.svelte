@@ -9,6 +9,14 @@
   let modal = false
   let message = null
 
+  async function creerProfil(u, e, n, i){
+    const { data, error } = await supabase
+      .from('utilisateurs')
+      .insert([
+        { id: u.uid(), nom: e.split('@')[0], niveau: n, instituion: i },
+      ])
+  }
+
   async function nouvelAvatar(utilisateur){
     const avatarFile = 'https://www.filon-chinois.app/avatarsample.jpg'
     const { data, error } = await supabase
@@ -26,23 +34,16 @@
     }
     else {
       const { user, session, error } = await supabase.auth.signUp({
-      email: email,
-      password: pass,
-        },
-        {
-          data: {
-            pseudo: email.split('@')[0],
-            niveau: niveau,
-            institution: institution
-          }
+          email: email,
+          password: pass,
         }
     )
 
       if (error) {
-        message = ["error", "Une erreur est survenue, veuillez réessayer plus tards!"]
+        message = ["error", "Échec! Veuillez réessayer."]
       } else {
-        message = ["success", "Veuillez confirmer votre adresse courriel avant de vous connecter"]
-        nouvelAvatar(user.id)
+        creerProfil(user, email, niveau, institution)
+        message = ["success", "Inscription réussie! Veuillez confirmer votre adresse courriel avant de vous connecter!"]
       }
     }
     
@@ -75,7 +76,7 @@
         {#if message != null}
           <div class={`alert alert-${message[0]}`}>
             <div class="flex-1">
-              <p>{message[1]}</p>
+              <label>{message[1]}</label>
             </div>
           </div>
         {/if}

@@ -5,7 +5,7 @@
   let pass = ""
 
   let modal = false
-
+  let message = null
   function enter(e){
     if (e.charCode === 13) {
       connexion()
@@ -17,7 +17,12 @@
       email: email,
       password: pass,
     })
-    console.log(error)
+    if (error) {
+      message = ["error", "Erreur de connexion! Réssayé "]
+    } else {
+      message = ["success", "Veuillez confirmer votre adresse courriel avant de vous connecter"]
+        
+    }
     modal = false
   }
 </script>
@@ -30,6 +35,15 @@
       <div class="flex flex-col gap-2 justify-center items-stretch">
         <input bind:value={email} type="email" name="email" id="email" placeholder="Adresse courriel" class="input input-md input-bordered" on:keypress={enter}>
         <input bind:value={pass} class="input input-md input-bordered" placeholder="Mot de passe" type="password" name="password" id="password" on:keypress={enter}>
+      </div>
+      <div class="my-4">
+        {#if message != null}
+          <div class={`alert alert-${message[0]}`}>
+            <div class="flex-1">
+              <label>{message[1]}</label>
+            </div>
+          </div>
+        {/if}
       </div>
       <div class="flex flex-row gap-2 justify-center items-stretch">
         <button tabindex="-1" class="btn mt-5 btn-neutral tracking-widest font-normal" on:click|preventDefault={() => modal = false}>Annuler</button>

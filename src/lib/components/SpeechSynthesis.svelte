@@ -2,7 +2,6 @@
   import { onMount } from "svelte"
   export let texte 
 
-  let voice
   let voices
   let zhVoices = []
   onMount(() => {
@@ -11,8 +10,6 @@
       zhVoices = voices.filter((v) => {
         return v.lang == "zh-CN"
       })
-      voice = zhVoices[0]
-
     }
   })
 
