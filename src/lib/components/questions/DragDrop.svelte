@@ -142,7 +142,7 @@
 </script>
 
 <div id="bound w-full">
-  <div class="grid grid-cols-2 mb-24 gap-1 w-full" id={`q${no}`}>
+  <div class="grid grid-cols-2 gap-1 w-full" id={`q${no}`}>
     {#if dropAlea}
       {#each dropAlea as drop}
         <div class="bg-gray-100 ">
@@ -166,7 +166,7 @@
     {/if}
   </div>
 
-  <div class="grid grid-cols-1 gap-1 mb-24 fixed bottom-10 right-10 w1 -px-4">
+  <div class="grid grid-cols-2 gap-1 w1 -px-4">
     {#if dragAlea}
       {#each dragAlea as drag}
         <div class="p-1 draggable d2 cursor-move" draggable="true" on:dragstart={dDrag} on:dragend={fDrag} data-reponse={drag.tempDrag[0]}>
@@ -179,7 +179,7 @@
     {/if}
   </div>
   {#if !estCorrige}
-  <div class="mx-2 p-4 bg-primary hover:bg-primary-focus text-primary-content inline-block text-center rounded-xl cursor-pointer " on:click={corriger}>Valider la réponse</div>
+  <div class="mx-2 mt-3 p-4 bg-primary hover:bg-primary-focus text-primary-content inline-block text-center rounded-xl cursor-pointer " on:click={corriger}>Valider la réponse</div>
   {:else}
   <div>
     <div class="alert alert-error my-4">
@@ -223,6 +223,6 @@
   }
 
   .w1{
-    width: 260px;
+    width:360px;
   }
     </style>
