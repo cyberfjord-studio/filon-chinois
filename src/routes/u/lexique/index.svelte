@@ -50,8 +50,8 @@
       {#each lexique as mot}
         <div class="group p-10 flex flex-col shadow-lg justify-center rounded-xl items-center cursor-pointer" on:click={() => afficherMot(mot.id)}>
           <h4 class="uppercase text-3xl font-medium">{mot.hanzi}</h4>
-          <p class="font-bold">{mot.pinyin}</p>
-          <p>{mot.def_fr}</p>
+          <p class="font-bold text-center">{mot.pinyin}</p>
+          <p class="text-center">{mot.def_fr}</p>
         </div>
       {/each}
     </div>

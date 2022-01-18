@@ -9,7 +9,7 @@
 <div class="w-full h-96 md:h-full" style="background-image: linear-gradient(175deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 37%), url('{$bgImage}'); background-size: cover; background-position: bottom center;">
   <header class="flex flex-col md:gap-5 pl-10 pt-4">
     <h1 class="uppercase font-light text-3xl md:text-6xl">Filon Chinois</h1>
-    <h2 class="text-primary text-2xl md:text-5xl">学习中文</h2>
+    <h2 class="text-primary text-2xl md:text-5xl">中文线索</h2>
   </header>
   <footer class="absolute left-0 bottom-0 md:left-24 right-0 h-32 bg-base-100">
     <div class="shadow-2xl absolute bottom-32 md:bottom-0 left-0  w-full md:w-4/12 p-6 md:p-10 bg-base-100 md:rounded-r-xl z-50">
