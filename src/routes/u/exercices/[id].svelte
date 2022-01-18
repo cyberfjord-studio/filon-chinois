@@ -197,12 +197,12 @@
     {/each}
   {:else if active == 3}
       {#if isNaN(totalPts) || totalPts == 0}
-        <div class="text-center mx-auto mt-10 select-none">
+        <div class="text-center mx-auto mt-10">
           <h4 class="text-2xl ">Section terminée</h4>
           <a href="/u/lecons/{exercice.lecons}" class="btn btn-primary mx-auto mt-5 select-none">Retour</a>
         </div>
       {:else}
-        <div class="text-center mx-auto mt-10 select-none">
+        <div class="text-center mx-auto mt-10">
           <h4 class="text-2xl ">Bravo! Vous avez obtenu</h4>
           <h3 class="text-9xl font-bold">{pts}</h3>
           <p class="text-4xl">points sur {totalPts}!</p>
