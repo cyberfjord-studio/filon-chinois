@@ -223,6 +223,6 @@
   }
 
   .w1{
-    width: 360px;
+    width: 260px;
   }
     </style>
