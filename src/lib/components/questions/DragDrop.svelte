@@ -2,10 +2,12 @@
   import supabase from '$lib/db';
   import Chargement from '../Chargement.svelte';
   import { createEventDispatcher, onMount } from 'svelte';
+  import Fichier from '../Fichier.svelte';
 
   const dispatch = createEventDispatcher();
   export let options
   export let no
+  
   let lexico = []
   let dropAlea
   let dragAlea
@@ -147,7 +149,12 @@
       {#each dropAlea as drop}
         <div class="bg-gray-100 ">
           <div class="flex flex-col justify-center items-center text-center">
-            {#if options.drop[0] == 'def_fr' || options.drop[0] == 'pinyin'}
+            {#if options.drop[0] == 'icone' }
+            <div class="mt-5 max-w-lg text-center flex justify-center items-center">
+              <Fichier d={drop.tempDrop[0]}/>
+            </div>
+              
+            {:else if options.drop[0] == 'def_fr' || options.drop[0] == 'pinyin'}
               <p class="text-xl">{drop.tempDrop[0]} </p>
               <p>{drop.tempDrop[1] ? drop.tempDrop[1]: ""}</p>
             {:else}
