@@ -173,7 +173,7 @@
     {/if}
   </div>
 
-  <div class="grid grid-cols-2 gap-1">
+  <div class="grid grid-cols-1 gap-1">
     {#if dragAlea}
       {#each dragAlea as drag}
         <div class="p-1 draggable d2 cursor-move" draggable="true" on:dragstart={dDrag} on:dragend={fDrag} data-reponse={drag.tempDrag[0]}>
