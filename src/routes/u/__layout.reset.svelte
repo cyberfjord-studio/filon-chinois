@@ -40,15 +40,13 @@
   }
 
   function fabtrad(e){
-    let phrase
+    let phrase = null
     if (window.getSelection().toString().length > 0) {
       let result = window.getSelection().toString().split("").filter((mot) => {
         return REGEX_CHINESE.test(mot)
       })
       phrase = result.join("")
       
-    }else{
-      phrase = null
     }
     if (phrase != null) {
         pop.style.top = e.clientY + "px"

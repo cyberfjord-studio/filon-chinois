@@ -78,6 +78,17 @@
               
   }
 
+  function compterPoints(e){
+    
+    if (questionActive != questions.length) {
+      
+    } else {
+      
+    }
+
+    
+  }
+
   function questionSuivante(e){
     pts += e.detail.points
     totalPts += e.detail.total
@@ -89,7 +100,6 @@
       if (!isNaN(totalPts)) {
         enregistrerScore()
       }
-      
       active = 3
     }
   }
