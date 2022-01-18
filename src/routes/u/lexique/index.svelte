@@ -1,7 +1,6 @@
 <script>
   import supabase from '$lib/db';
   import Chargement from '$lib/components/Chargement.svelte'
-  import {groupeData} from '$lib/store'
 
   async function getLexique(){
     let { data: lexique, error } = await supabase
@@ -46,7 +45,6 @@
   {#await getLexique()}
     <Chargement/>
   {:then lexique}
-    <h3 class="p-5 text-2xl text-neutral-content">Niveau {$groupeData.niveau}</h3>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-5">
       {#each lexique as mot}
         <div class="group p-10 flex flex-col shadow-lg justify-center rounded-xl items-center cursor-pointer" on:click={() => afficherMot(mot.id)}>

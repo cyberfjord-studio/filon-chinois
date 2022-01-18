@@ -32,7 +32,7 @@
 
 </script>
 
-<div class="grid grid-cols-3">
+<div class="grid grid-cols-3 gap-2 mt-5">
   {#each options.choix_reponses as choix}
     <div class="mx-2 p-4 bg-primary hover:bg-primary-focus text-primary-content inline-block text-center rounded-xl cursor-pointer select-none" on:click={() => corriger(choix)}>{choix}</div>
   {/each}

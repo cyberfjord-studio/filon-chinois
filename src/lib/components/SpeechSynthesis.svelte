@@ -1,8 +1,8 @@
 <script>
   import { onMount } from "svelte"
-  import { pitch, speed, voice } from "$lib/store"
   export let texte 
 
+  let voice
   let voices
   let zhVoices = []
   onMount(() => {
@@ -11,16 +11,16 @@
       zhVoices = voices.filter((v) => {
         return v.lang == "zh-CN"
       })
-      voice.set(zhVoices[0])
-      console.log($voice)
+      voice = zhVoices[0]
+
     }
   })
 
   function play(){
     const speak = new SpeechSynthesisUtterance(texte)
     speechSynthesis.cancel()
-    speak.rate = $speed
-    speak.pitch = $pitch
+    speak.rate = 1
+    speak.pitch = 1
     speak.volume = 100
     speak.voice = zhVoices[0]
     speechSynthesis.speak(speak)

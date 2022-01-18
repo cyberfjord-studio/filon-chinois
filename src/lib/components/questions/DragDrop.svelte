@@ -139,17 +139,22 @@
   init()
 </script>
 
-<div id="bound">
-  <div class="grid grid-cols-2 gap-1" id={`q${no}`}>
+<div id="bound w-full">
+  <div class="grid grid-cols-2 mb-24 gap-1 w-full" id={`q${no}`}>
     {#if dropAlea}
       {#each dropAlea as drop}
-        <div class="bg-gray-100">
-          <div class="flex justify-center items-center">
-            <p>{drop.tempDrop[0]} </p>
-            <p>{drop.tempDrop[1] ? drop.tempDrop[1]: ""}</p>
+        <div class="bg-gray-100 ">
+          <div class="flex flex-col justify-center items-center text-center">
+            {#if options.drop[0] == 'def_fr' || options.drop[0] == 'pinyin'}
+              <p class="text-xl">{drop.tempDrop[0]} </p>
+              <p>{drop.tempDrop[1] ? drop.tempDrop[1]: ""}</p>
+            {:else}
+              <p class="text-4xl">{drop.tempDrop[0]} </p>
+              <p>{drop.tempDrop[1] ? drop.tempDrop[1]: ""}</p>
+            {/if}
           </div>
           <div class="p-2">
-            <div class="droppable d1 w-full h-10 bg-red-100 rounded-lg " data-question={drop.tempDrop[0]} on:dragover={dOver}>
+            <div class="droppable d1 w-full h-16 rounded-full si" data-question={drop.tempDrop[0]} on:dragover={dOver}>
               
             </div>
           </div>
@@ -159,17 +164,29 @@
     {/if}
   </div>
 
-  <div class="grid grid-cols-2 gap-1">
+  <div class="grid grid-cols-2 gap-1 mb-24 fixed bottom-10 right-10 w1 -px-4">
     {#if dragAlea}
       {#each dragAlea as drag}
         <div class="p-1 draggable d2 cursor-move" draggable="true" on:dragstart={dDrag} on:dragend={fDrag} data-reponse={drag.tempDrag[0]}>
-          <div class="w-full h-10 text-xs bg-gray-200 rounded-lg flex flex-col justify-center items-center">
-            <p>{drag.tempDrag[0]}</p> 
+          <div class="w-full h-16 text-xs bg-gray-200 rounded-full flex flex-col justify-center items-center">
+            <p class="text-lg text-center">{drag.tempDrag[0]}</p> 
             <p>{drag.tempDrag[1] ?  drag.tempDrag[1]: ""}</p>
           </div>
         </div>
       {/each}
     {/if}
   </div>
-  <button class="btn btn-primary mt-5 mx-auto" on:click={corriger}>Suivant</button>
+  <button class="w-52 fixed bottom-5 btn btn-primary mt-5 mx-auto" on:click={corriger}>Suivant</button>
 </div>
+
+
+<style>
+  .si{
+    background-color:#7E8CA1;
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.356);
+  }
+
+  .w1{
+    width: 360px;
+  }
+    </style>

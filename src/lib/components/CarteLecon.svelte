@@ -1,6 +1,7 @@
 <script>
   export let d
   export let c
+  console.log(c)
 </script>
 
 

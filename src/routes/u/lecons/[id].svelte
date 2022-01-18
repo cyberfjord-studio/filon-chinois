@@ -4,8 +4,7 @@
     let { data: lecon, error } = await supabase
       .from('lecons')
       .select('*')
-      .eq('niveau', params.niveau)
-      .eq('num_fr', params.id)
+      .eq('id', params.id)
 
     return {
       props: {
@@ -32,6 +31,7 @@
       .from('exercices')
       .select("*")
       .eq('lecons', lecon.id)
+      .order('num', { ascending: true })
 
     cats.map((cat) => {
       let tab = []
@@ -48,22 +48,24 @@
 </script>
 
   <svelte:head>
-    <title>Lecon {lecon.num_fr} - Filon-Chinois</title>
+    <title>Leçon {lecon.num_fr} - Filon-Chinois</title>
   </svelte:head>
 
-<div class="p-5 pb-32 md:p-10 md:pb-0 select-none">
+<div class="p-5 pb-32 md:p-10 md:pb-5 select-none">
   {#await getExercices()}
     <Chargement/>
   {:then liste}
-    <div class="grid grid-cols-5">
-      {#each liste as li}
+  <h1 class="text-5xl font-light">Leçon {lecon.num_fr} — {lecon.titre_cn}</h1>
+  {#each liste as li}
+  
+  <div class="grid grid-cols-5 my-5">
       {#if li.exercices.length > 0}
         {#each li.exercices as exercice}
           <CarteLecon d={exercice} c={li.categorie}/>
         {/each}
       {/if}
-    {/each}
     </div>
+    {/each}
     
   {/await}
 </div>

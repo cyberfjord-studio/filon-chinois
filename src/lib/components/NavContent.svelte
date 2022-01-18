@@ -17,7 +17,7 @@
     },
     {
       "texte_cn": "轮廓",
-      "texte_fr": "Profil",
+      "texte_fr": "Progression",
       "url": "/u/profil"
     }
   ]

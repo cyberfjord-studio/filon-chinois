@@ -40,6 +40,7 @@
   //import TraductionChoix from '$lib/components/questions/TraductionChoix.svelte';
   import TraductionEcrite from '$lib/components/questions/TraductionEcrite.svelte';
   import Chargement from '$lib/components/Chargement.svelte';
+  import Fichier from '$lib/components/Fichier.svelte';
 
   export let exercice
   export let questions
@@ -93,14 +94,14 @@
 <div class="flex flex-row w-full items-center justify-between h-auto">
   {#if active == 0}
     <div class="flex w-1/2 shrink-0 flex-col justify-center items-center gap-5">
-      <div class="flex flex-row justify-center items-center gap-10"><span class="flex justify-center items-center bg-secondary select-none text-secondary-content w-32 h-32 rounded-full text-2xl">{exercice.titre_cn}</span><span class="text-3xl select-none">{exercice.titre_fr}</span></div>
+      <div class="flex flex-row justify-center items-center gap-10"><span class="text-3xl ">{exercice.titre_fr}</span></div>
       <span>{exercice.sous_titre_fr != null ? exercice.sous_titre_fr: ""}</span>
-      <p class="w-2/3 select-none text-justify ">{@html exercice.description}</p>
+      <p class="w-2/3  text-justify mx-auto">{@html exercice.description}</p>
       <div class="w-3/12 flex flex-row justify-between items-center">
-        <span class="uppercase font-bold select-none">
+        <span class="uppercase font-bold ">
           Nombre de questions
         </span>
-        <span class="text-2xl select-none">
+        <span class="text-2xl ">
           {questions.length}
         </span>
       </div>
@@ -118,7 +119,7 @@
           
           {#each oldScore as scorePct}
           <tr>
-            <td class="p-3 pl-7 font-bold text-3xl ">{scorePct.score} %</td>
+            <td class="p-3 pl-7 font-bold text-3xl ">{scorePct.score.toFixed(2)} %</td>
             <td class="p-3 pr-7 text-lg">{obtenirDate(scorePct.date_exercice)}</td>
           </tr>
           {/each}
@@ -129,10 +130,15 @@
     </div>
   {:else if active == 1}
     {#each questions as question}
-      <div class="mt-10 select-none max-w-sm mx-auto flex-col justify-center items-stretch {questionActive == question.no ? 'flex': 'hidden'}">
-          <h5 class="text-2xl text-base-content select-none">Question {question.no} sur {questions.length}</h5>
+      <div class="mt-10 select-none max-w-sm mx-auto flex-col justify-center items-center {questionActive == question.no ? 'flex': 'hidden'}">
+          <h5 class="text-lg italic text-base-content select-none">Question {question.no} sur {questions.length}</h5>
           <p class="prose-xl pt-2 select-none">{@html question.d.contenu}</p>
-          <div class="py-4">
+          {#if question.d.fichier != null}
+            <div class="mt-5">
+              <Fichier d={question.d.fichier}/>
+            </div>  
+          {/if}
+          <div class="py-4 w-full">
           {#if question.d.type == 0}
             Fichier non disponible
           {:else if question.d.type == 1}
@@ -150,7 +156,7 @@
           {:else if question.d.type == 7}
             <ListeEcrite options={question.d.options} on:suivant={questionSuivante}/>
           {:else if question.d.type == 8}
-            <Bullet options={question.d.options} on:suivant={questionSuivante}/>
+            <Bullet options={question.d.options} no={question.no} on:suivant={questionSuivante}/>
           {:else}
             <div class="mx-2 p-4 bg-primary hover:bg-primary-focus text-primary-content inline-block w-5/12 text-center rounded-xl cursor-pointer select-none" on:click={questionSuivante}>Suivant</div>
           {/if}

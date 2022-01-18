@@ -20,7 +20,7 @@
   import { goto } from '$app/navigation';
   import NavContent from '$lib/components/NavContent.svelte';
   import Header from '$lib/components/Header.svelte';
-  import { profilData, groupeData, profilAvatar, bgImage} from '$lib/store';
+  import { profilData, bgImage} from '$lib/store';
   import Chargement from '$lib/components/Chargement.svelte';
   import SpeechSynthesis from '$lib/components/SpeechSynthesis.svelte';
 
@@ -36,18 +36,6 @@
   function navDash(){
     if (!$session) {
       goto("/")
-    }
-  }
-
-  async function downloadImage(path) {
-    try {
-      const { data, error } = await supabase.storage.from('avatars').download(path)
-      if (error) throw error
-      
-      profilAvatar.set(URL.createObjectURL(data))
-      
-    } catch (error) {
-      console.error('Error downloading image: ', error.message)
     }
   }
 
@@ -72,23 +60,14 @@
   }
 
   async function getUserProfile(){
-    let path =  String($session.user.id) + ".jpg"
     let { data: profil, error } = await supabase
-          .from('profil')
+          .from('utilisateurs')
           .select("*")
           .eq("id", $session.user.id)
 
     profilData.set(profil[0])
-    await downloadImage(path)
-
-    let { data: groupe, err } = await supabase
-        .from('groupes')
-        .select("*")
-        .eq("id", profil[0].groupe)
-
-    groupeData.set(groupe[0])
     
-    if (groupe[0] && profil[0]) {
+    if (profil[0]) {
       pret = true
     }
   }
@@ -100,8 +79,6 @@
       $session = userSession
       if (event == "SIGNED_IN") {
         getUserProfile()
-      } else {
-        console.log('Fail')
       }
       navDash()
     })
@@ -118,9 +95,6 @@
     
   }
 
-  function tts(texte){
-    
-  }
 </script>
 
 <svelte:window on:mouseup={fabtrad} on:mousedown={menageSelection}/>

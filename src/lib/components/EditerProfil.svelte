@@ -1,9 +1,8 @@
 <script>
   import supabase from '$lib/db'
-  import { profilData, profilAvatar, groupeData } from "$lib/store";
+  import { profilData } from "$lib/store";
 
   let pseudo = $profilData.pseudo
-  let groupe = $groupeData.id
 
   let path;
 
@@ -25,13 +24,9 @@
   }
 
   async function sauvegarderProfil(){
-    if (files && files.length > 0) {
-      await uploadAvatar()
-      downloadImage(path)
-    } 
     const { data, error } = await supabase
-      .from('profil')
-      .update({ 'pseudo' : pseudo})
+      .from('utilisateurs')
+      .update({ 'nom' : nom})
       .eq('id', $profilData.id)
     
   }

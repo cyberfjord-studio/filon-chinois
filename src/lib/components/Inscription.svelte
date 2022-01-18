@@ -21,9 +21,7 @@
   }
 
   async function inscription(){
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) == false) {
-      message = ["error", "Email invalide!"]
-    }else if (pass.length < 6) {
+    if (pass.length < 6) {
       message = ["error", "Votre mot de passe doit faire au moins 6 caractères"]
     }
     else {
@@ -63,19 +61,19 @@
         <input bind:value={email} type="email" name="email" id="email" placeholder="Adresse courriel" class="input input-md input-bordered">
         <input bind:value={pass} class="input input-md input-bordered" placeholder="Mot de passe" type="password" name="password" id="password" >
         <select bind:value={institution} name="institution" id="institution">
-          <option select value="Université de Sherbrooke">Université de Sherbrooke</option>
+          <option selected="selected" value="Université de Sherbrooke">Université de Sherbrooke</option>
           <option value="Université de Montréal">Université de Montréal</option>
           <option value="Université Bishop">Université Bishop</option>
           <option value="Collège Champlain">Collège Champlain</option>
+          <option value="Collège Champlain">Autres</option>
         </select>
         <select bind:value={niveau} name="niveau" id="niveau">
-          <option select value="1">1</option>
-          <option value="2">2</option>
+          <option selected="selected" value="1">1</option>
         </select>
       </div>
       <div class="my-4">
         {#if message != null}
-          <div class="alert alert-{message[0]}">
+          <div class={`alert alert-${message[0]}`}>
             <div class="flex-1">
               <p>{message[1]}</p>
             </div>

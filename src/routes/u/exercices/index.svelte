@@ -2,8 +2,6 @@
   import supabase from '$lib/db';
   import Chargement from '$lib/components/Chargement.svelte'
   import CarteLecon from '$lib/components/CarteLecon.svelte';
-  import {groupeData} from '$lib/store'
-  import { list } from 'postcss';
 
   async function getExercices(){
     let liste = []
@@ -19,6 +17,7 @@
     let { data: exercices, error: erreur2 } = await supabase
         .from('exercices')
         .select("*")
+        .order('num', { ascending: true })
 
     lecons.map((lecon) => {
       let tab = []
@@ -33,7 +32,7 @@
       })
       liste.push({lecon: lecon, exercices: tab, categorie: tab2})
     })    
-    console.log(liste)
+    
     return liste
   }
   

@@ -1,13 +1,13 @@
 <script>
   import supabase from '$lib/db';
   import Chargement from '$lib/components/Chargement.svelte'
-  import {groupeData} from '$lib/store'
+  import {profilData} from '$lib/store'
 
   async function getLecons(){
     let { data: lecons, error } = await supabase
         .from('lecons')
         .select("*")
-        .eq("niveau", 99)
+        .eq("niveau", $profilData.niveau)
     return lecons
   }
   
@@ -21,10 +21,13 @@
   {#await getLecons()}
     <Chargement/>
   {:then lecons}
-    <div class="flex flex-col justify-center items-center">
+    <div class="flex flex-col justify-center items-center gap-5">
+      <div>
+
+  
       {#each lecons as lecon}
-      <a href="/u/lecons/{lecon.niveau}/{lecon.num_fr}">
-        <div class="group flex flex-row justify-between rounded-xl items-center cursor-pointer hover:bg-secondary hover:text-secondary-content">
+      <a href="/u/lecons/{lecon.id}" class="mt-2">
+        <div class="group flex flex-row justify-between rounded-xl items-center cursor-pointer hover:bg-secondary hover:text-secondary-content mt-2">
           <div class="flex flex-col bg-base-100 p-5 rounded-lg drop-shadow-lg text-center">
             <p class="font-medium md:text-3xl text-base-content group-hover:text-primary-focus">第{lecon.num_cn}课</p>
             <p class="uppercase md:text-xl group-hover:text-primary-focus">Leçon {lecon.num_fr}</p>
@@ -36,6 +39,7 @@
         </div>
       </a>
     {/each}
+  </div>
     </div>
     
   {/await}

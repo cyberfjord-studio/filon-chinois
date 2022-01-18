@@ -22,7 +22,7 @@
       .eq
 
 
-    let { data: liste, err} = await supabase
+    let { data: liste1, err1} = await supabase
       .from('lexique')
       .select('id')
       .range()
