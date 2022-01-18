@@ -51,7 +51,7 @@
     <title>Leçon {lecon.num_fr} - Filon-Chinois</title>
   </svelte:head>
 
-<div class="p-5 pb-32 md:p-10 md:pb-5 select-none">
+<div class="p-5 pb-32 md:p-10 md:pb-5">
   {#await getExercices()}
     <Chargement/>
   {:then liste}
