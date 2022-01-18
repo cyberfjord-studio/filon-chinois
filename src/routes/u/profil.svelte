@@ -20,7 +20,7 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="-mt-12 sm:-mt-16 flex items-end space-x-5">
 
-        <div class="mt-6 flex-1 sm:min-w-0 flex items-center sm:justify-end sm:space-x-6 sm:pb-1">
+        <div class="mt-12 flex-1 sm:min-w-0 flex items-center sm:justify-end sm:space-x-6 sm:pb-1">
           <div class="sm:hidden 2xl:block mt-6 min-w-0 flex-1">
             <h1 class="text-2xl font-bold text-gray-900 truncate">
               {$profilData.nom}

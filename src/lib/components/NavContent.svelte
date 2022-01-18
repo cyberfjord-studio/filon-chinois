@@ -16,8 +16,8 @@
       "url": "/u/lexique"
     },
     {
-      "texte_cn": "轮廓",
-      "texte_fr": "Progression",
+      "texte_cn": "用户",
+      "texte_fr": "Profil",
       "url": "/u/profil"
     }
   ]

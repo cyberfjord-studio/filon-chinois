@@ -16,7 +16,7 @@
   function play(){
     const speak = new SpeechSynthesisUtterance(texte)
     speechSynthesis.cancel()
-    speak.rate = 1
+    speak.rate = 0.7
     speak.pitch = 1
     speak.volume = 100
     speak.voice = zhVoices[0]
