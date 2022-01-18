@@ -10,6 +10,7 @@
       .from('questions')
       .select('*')
       .eq('exercice', params.id)
+      .order('num', {ascending: true})
       
 
     let questions_format = []
@@ -74,6 +75,7 @@
       .insert([
         { "utilisateur": $profilData.id, "exercice": exercice.id, "score": (pts/totalPts * 100)},
       ])
+              
   }
 
   function questionSuivante(e){
