@@ -23,6 +23,7 @@
   import { profilData, bgImage} from '$lib/store';
   import Chargement from '$lib/components/Chargement.svelte';
   import SpeechSynthesis from '$lib/components/SpeechSynthesis.svelte';
+import { onMount } from 'svelte';
 
   const REGEX_CHINESE = /[\u4e00-\u9fff]|[\u3400-\u4dbf]|[\u{20000}-\u{2a6df}]|[\u{2a700}-\u{2b73f}]|[\u{2b740}-\u{2b81f}]|[\u{2b820}-\u{2ceaf}]|[\uf900-\ufaff]|[\u3300-\u33ff]|[\ufe30-\ufe4f]|[\uf900-\ufaff]|[\u{2f800}-\u{2fa1f}]/u;
 
@@ -93,6 +94,20 @@
     
   }
 
+  onMount(()=>{
+    
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6161d7e786aee40a5735bfc1/1fhj36obd';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+
+
+  })
 </script>
 
 <svelte:window on:mouseup={fabtrad} on:mousedown={menageSelection}/>

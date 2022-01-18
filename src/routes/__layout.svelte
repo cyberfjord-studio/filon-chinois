@@ -15,6 +15,7 @@
 
 <script>
   import '../main.css'
+  import { onMount } from 'svelte';
   import { page, session } from '$app/stores'
   import { browser } from '$app/env';
   import { goto } from '$app/navigation';
@@ -48,6 +49,21 @@
       navDash()
     })
   }
+
+  onMount(()=>{
+    
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6161d7e786aee40a5735bfc1/1fhj36obd';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+
+
+  })
 </script>
 
 <svelte:head>
