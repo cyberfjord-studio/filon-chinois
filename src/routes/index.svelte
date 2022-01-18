@@ -22,6 +22,6 @@
       <div class="absolute bottom-0 mx-auto md:right-0 md:w-8/12 h-32 bg-base-100 flex justify-end items-center px-5 md:pr-16">
         <img src="/partenaires.png" alt="">
       </div>
-      <p class="absolute bottom-1 right-1 text-xs">Alpha 0.2.1.18.1027</p>
+      <p class="absolute bottom-1 right-1 text-xs">Alpha 0.2.1.18.1128</p>
     </footer>
   </div>
