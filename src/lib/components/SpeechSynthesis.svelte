@@ -4,17 +4,23 @@
 
   let voices
   let zhVoices = []
+
+  function getOtherVoices(){
+    voices = speechSynthesis.getVoices()
+    zhVoices = voices.filter((v) => {
+        return v.lang == "zh-CN" && v.name != "Ting-Ting"
+    })
+  }
+
   onMount(() => {
     speechSynthesis.onvoiceschanged = () => {
       voices = speechSynthesis.getVoices()
       zhVoices = voices.filter((v) => {
-        if (v.name == "Google 普通话（中国大陆）") {
-          return v.name == "Google 普通话（中国大陆）"
-        } else {
-          return v.lang == "zh-CN" && v.name != "Ting-Ting"
-        }
+        return v.name == "Google 普通话（中国大陆）"
       })
-      console.log(zhVoices)
+      if (!zhVoices.length) {
+        getOtherVoices()
+      }
     }
   })
 
