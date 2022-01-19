@@ -8,7 +8,11 @@
     speechSynthesis.onvoiceschanged = () => {
       voices = speechSynthesis.getVoices()
       zhVoices = voices.filter((v) => {
-        return v.lang == "zh-CN" && v.name != "Ting-Ting"
+        if (v.name == "Google 普通话（中国大陆）") {
+          return v.name == "Google 普通话（中国大陆）"
+        } else {
+          return v.lang == "zh-CN" && v.name != "Ting-Ting"
+        }
       })
       console.log(zhVoices)
     }
