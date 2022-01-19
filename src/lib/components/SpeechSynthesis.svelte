@@ -8,7 +8,7 @@
     speechSynthesis.onvoiceschanged = () => {
       voices = speechSynthesis.getVoices()
       zhVoices = voices.filter((v) => {
-        return v.lang == "zh-CN"
+        return v.lang == "zh-CN" && v.name != "Ting-Ting"
       })
       console.log(zhVoices)
     }
