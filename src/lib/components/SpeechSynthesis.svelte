@@ -10,6 +10,7 @@
       zhVoices = voices.filter((v) => {
         return v.lang == "zh-CN"
       })
+      console.log(zhVoices)
     }
   })
 
@@ -21,7 +22,6 @@
     speak.volume = 100
     speak.voice = zhVoices[0]
     speechSynthesis.speak(speak)
-    console.log("played")
   }
 
 
@@ -31,4 +31,3 @@
 <button class="btn btn-secondary btn-circle" on:click={play}>
   <i class="fas fa-play"></i>
 </button>
-  
